@@ -1,9 +1,11 @@
 // ゲームパネルクラス
 class GamePanel {
   Game game;
+
   GamePanel(Game game) {
     this.game = game;
   }
+
   void draw() {
     background(200);
     switch(game.state) {
@@ -38,6 +40,7 @@ class GamePanel {
     }
   }
   void drawMaze() {
+    
     int yOffset = 40;
     for (int y = 0; y < game.currentMaze.height; y++) {
       for (int x = 0; x < game.currentMaze.width; x++) {
@@ -109,8 +112,8 @@ class GamePanel {
     textSize(24);
     text("Final Score: " + game.score, width/2, height/2);
 
-    // 文字を点滅させる処理
-    if (frameCount / 50 % 2 == 0) {
+    //文字を点滅させる処理
+      if (frameCount / 50 % 2 == 0) {
       fill(110);
     } else {
       textAlign(CENTER, CENTER);

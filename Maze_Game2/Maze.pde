@@ -2,13 +2,15 @@
 class Maze {
   int[][] tiles;
   int width, height;
-  
+
   Maze(int w, int h) {
     width = w;
     height = h;
     tiles = new int[height][width];
     generateMaze();
   }
+
+
   void generateMaze() {
     // 全てを壁(1)で埋める
     for (int y = 0; y < height; y++) {
@@ -28,6 +30,8 @@ class Maze {
     tiles[1][1] = 0;
     tiles[height - 2][width - 2] = 0;
   }
+
+
   void dfs(int x, int y) {
     int[][] directions = {{0, -2}, {2, 0}, {0, 2}, {-2, 0}};
     shuffleArray(directions);
@@ -41,6 +45,8 @@ class Maze {
       }
     }
   }
+
+
   void shuffleArray(int[][] array) {
     for (int i = array.length - 1; i > 0; i--) {
       int index = floor(random(i + 1));
@@ -49,10 +55,19 @@ class Maze {
       array[i] = temp;
     }
   }
+
+
   boolean isWalkable(int x, int y) {
+    //迷路範囲外であればfalse
     if (x < 0 || y < 0 || x >= width || y >= height) {
       return false;
     }
-    return tiles[y][x] == 0;
+    //壁の場合
+    if (tiles[y][x] == 1) {
+      return false;
+    } else {
+      //tiles[y][x] == 0 は歩行可能な場所
+      return true;
+    }
   }
 }
