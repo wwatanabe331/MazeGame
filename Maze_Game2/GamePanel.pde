@@ -6,12 +6,15 @@ class GamePanel {
     this.game = game;
   }
 
+//ゲーム描画
   void draw() {
     background(200);
+    
     switch(game.state) {
     case TITLE:
       drawTitle();
       break;
+      
     case PLAYING:
       drawMaze();
       drawPlayer();
@@ -19,15 +22,19 @@ class GamePanel {
       drawPoints();
       drawScore();
       break;
+      
     case GAME_OVER:
       drawGameOver();
       break;
     }
   }
+  
+  
   void drawTitle() {
     background(110);
     PImage title = loadImage("start.png");
     image(title, 0, 0, 600, 600);
+    
     // 文字を点滅させる処理
     if (frameCount / 10 % 2 == 0) {
       fill(110);
@@ -39,15 +46,18 @@ class GamePanel {
       text("Press SPACE to start", width/2, height*2/3);
     }
   }
+  
+  
   void drawMaze() {
-    
+    //上部のスコア表示スペースのため
     int yOffset = 40;
+    
     for (int y = 0; y < game.currentMaze.height; y++) {
       for (int x = 0; x < game.currentMaze.width; x++) {
         if (game.currentMaze.tiles[y][x] == 1) {
-          fill(0);
+          fill(0); //壁
         } else {
-          fill(255);
+          fill(255); //道
         }
         rect(x * game.cellSize, y * game.cellSize + yOffset, game.cellSize, game.cellSize);
       }
@@ -55,7 +65,9 @@ class GamePanel {
   }
 
   void drawPlayer() {
+    //上部のスコア表示スペースのため
     int yOffset = 40;
+    //プレイヤーは緑
     fill(0, 255, 0);
     ellipse(game.player.position.x * game.cellSize + game.cellSize/2,
       game.player.position.y * game.cellSize + game.cellSize/2 + yOffset,
@@ -63,9 +75,12 @@ class GamePanel {
   }
 
   void drawEnemies() {
+    //上部のスコア表示スペースのため
     int yOffset = 40;
+    //敵は垢
     fill(255, 0, 0);
-    for (Enemy enemy : game.enemies) {
+    for (int i = 0; i < game.enemies.size(); i++) {
+      Enemy enemy = game.enemies.get(i);
       ellipse(enemy.position.x * game.cellSize + game.cellSize/2,
         enemy.position.y * game.cellSize + game.cellSize/2 + yOffset,
         game.cellSize * 0.8, game.cellSize * 0.8);
@@ -73,14 +88,20 @@ class GamePanel {
   }
 
   void drawPoints() {
+    //上部のスコア表示スペースのため
     int yOffset = 40;
+    //得点は黄色
     fill(255, 255, 0);
-    for (Point point : game.points) {
+    for (int i = 0; i < game.points.size(); i++) {
+      Point point = game.points.get(i);
       ellipse(point.position.x * game.cellSize + game.cellSize/2,
         point.position.y * game.cellSize + game.cellSize/2 + yOffset,
         game.cellSize * 0.4, game.cellSize * 0.4);
     }
   }
+  
+  
+  
   void drawScore() {
     // 背景を描画
     fill(211, 211, 211);
@@ -96,6 +117,8 @@ class GamePanel {
     text("Level: " + game.currentLevel, width/3, 20);
     text("Time: " + game.remainingTime, 2*width/3, 20);
   }
+  
+  
   void drawGameOver() {
     background(110);
     textAlign(CENTER, CENTER);

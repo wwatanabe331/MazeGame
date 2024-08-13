@@ -10,6 +10,7 @@ class Position {
     this.y = newY;
   }
   
+  // 他の位置オブジェクトと等しいかどうかを判定するメソッド
   boolean equals(Position other) {
     return this.x == other.x && this.y == other.y;
   }

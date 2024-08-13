@@ -124,7 +124,9 @@ class Game {
     // 敵の移動（0.5秒に1回）
     if (millis() - lastEnemyMoveTime > 500) {
       //Enemyオブジェクトのenemiesをenemy変数に代入し一体ずつ動かしてく
-      for (Enemy enemy : enemies) {
+      for (int i = 0; i < enemies.size(); i++) {
+        Enemy enemy = enemies.get(i);
+        
         //Enemyクラスのmoveメソッドに現在の迷路と主人公の位置をおくる
         enemy.move(currentMaze, player);
         if (enemy.position.equals(player.position)) {
